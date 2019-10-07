@@ -1,0 +1,7 @@
+version: "3"
+services:
+  editor:
+    build: ./
+    image: dalongrong/asyncapi-editor:1.0.1
+    ports:
+    - "5000:5000"
