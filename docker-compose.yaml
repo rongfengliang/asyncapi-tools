@@ -1,0 +1,7 @@
+version: "3"
+services:
+  playground:
+    build: ./
+    image: dalongrong/asyncapi-playground:1.2.0
+    ports:
+    - "5000:5000"

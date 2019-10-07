@@ -1,0 +1,130 @@
+<{{#if button}}button{{else}}a{{/if}}
+  {{#if button}}
+    {{#if submit}}
+      type="submit"
+    {{/if}}
+  {{/if}}
+
+  {{#if style}}
+  style="{{style}}"
+  {{/if}}
+
+  class="
+    button
+    {{#if class}}{{class}}{{/if}}
+
+    {{#if bold}}
+      button--bold
+    {{/if}}
+
+    {{#if icon}}
+      button--icon
+      {{#if size}}
+        button--icon--{{size}}
+      {{/if}}
+    {{else}}
+      {{#if primary}}
+        button--primary
+      {{/if}}
+      {{#if regular}}
+        button--regular
+      {{/if}}
+      {{#if outline}}
+        button--outline
+      {{/if}}
+    {{/if}}
+  "
+  {{#unless button}}
+    {{#if href}}
+      href="{{href}}"
+      target="_blank"
+    {{/if}}
+  {{/unless}}
+  {{#if title}}
+  title="{{title}}"
+  {{/if}}
+>
+  {{#if (eq textPosition 'before-icon')}}
+  <span class="button__text button__text--left">{{text}}</span>
+  {{/if}}
+
+  {{#if icon}}
+    <i class="{{icon}}"></i>
+  {{/if}}
+
+  {{#if (eq textPosition 'after-icon')}}
+  <span class="button__text button__text--right">{{text}}</span>
+  {{/if}}
+
+  {{#unless textPosition}}
+  {{text}}
+  {{/unless}}
+</{{#if button}}button{{else}}a{{/if}}>
+
+<style>
+.button {
+  background-color: transparent;
+  color: #abc1cc;
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 15px;
+  text-decoration: none;
+}
+.button:hover {
+  color: white;
+}
+
+.button--regular {
+  background-color: #607d8b;
+}
+
+.button--primary {
+  background-color: #38C172;
+}
+
+.button--outline {
+  border: #abc1cc 1px solid;
+}
+.button--outline:hover {
+  border: #fff 1px solid;
+}
+
+.button--icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 22px;
+  font-weight: normal;
+  padding: 0;
+  color: #abc1cc;
+}
+.button--icon:hover {
+  color: white;
+}
+
+.button--icon--small {
+  font-size: 18px;
+}
+
+.button--bold {
+  font-weight: bold;
+}
+
+.button__text {
+  font-size: 14px;
+}
+
+.button__text--left {
+  padding-right: 10px;
+}
+
+.button__text--right {
+  padding-left: 10px;
+}
+</style>

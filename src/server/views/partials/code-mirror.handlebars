@@ -1,0 +1,66 @@
+<textarea id="{{id}}" name="{{name}}">
+{{> @partial-block}}
+</textarea>
+
+<style>
+  #{{id}} {
+    display: none;
+  }
+
+  .CodeMirror {
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Fira Code', monospace;
+  }
+</style>
+
+<script>
+window.addEventListener('load', () => {
+  const App = document.querySelector('{{app}}');
+
+  function notifyApp(value) {
+    if (App) {
+      App.dispatchEvent(new CustomEvent('onCodeChange', { detail: value }));
+    }
+  }
+
+  function onCodeChange(cm) {
+    notifyApp(cm.getValue());
+  }
+
+  function betterTab(cm) {
+    if (cm.somethingSelected()) {
+      cm.indentSelection("add");
+    } else {
+      cm.replaceSelection(cm.getOption("indentWithTabs") ? "\t" :
+        Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+    }
+  }
+
+  const editor = CodeMirror.fromTextArea(document.getElementById('{{id}}'), {
+    mode: "text/yaml",
+    lineNumbers: true,
+    lineWrapping: true,
+    theme: 'material',
+    tabSize: 2,
+    indentWithTabs: false,
+    extraKeys: { Tab: betterTab }
+  });
+
+  editor.on('change', _.debounce(onCodeChange, 500));
+
+  App.addEventListener('updateCode', (ev) => {
+    editor.setValue(ev.detail);
+  });
+
+  try {
+    var doc = localStorage.getItem('doc-v2');
+    var result = localStorage.getItem('result-v2');
+    editor.setValue(doc);
+  } catch (e) {
+    console.error('Could not read previous document from localStorage.');
+
+    editor.setValue(document.getElementById('{{id}}').value);
+  }
+});
+</script>
